@@ -10,13 +10,19 @@ export function seed(knex) {
     .then(() => {
       return knex('users').insert([
         {
-          name: 'Saugat Acharya',
-          updated_at: new Date()
+          name: 'Admin',
+          email: 'admin@dcg.com',
+          password: 'admin@123',
+          isAdmin: 1,
+          updated_at: new Date(),
         },
         {
-          name: 'John Doe',
-          updated_at: new Date()
-        }
+          name: 'test',
+          email: 'test@dcg.com',
+          password: 'test@123',
+          isAdmin: 0,
+          updated_at: new Date(),
+        },
       ]);
     });
 }
