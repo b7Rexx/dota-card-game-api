@@ -2,6 +2,8 @@ import { Router } from 'express';
 
 import swaggerSpec from './utils/swagger';
 import userRoutes from './routes/userRoutes';
+import heroRoutes from './routes/heroRoutes';
+import heroTypeRoutes from './routes/heroTypeRoutes';
 
 /**
  * Contains all API routes for the application.
@@ -21,10 +23,12 @@ router.get('/swagger.json', (req, res) => {
 router.get('/', (req, res) => {
   res.json({
     app: req.app.locals.title,
-    apiVersion: req.app.locals.version
+    apiVersion: req.app.locals.version,
   });
 });
 
 router.use('/users', userRoutes);
+router.use('/heroes', heroRoutes);
+router.use('/herotypes', heroTypeRoutes);
 
 export default router;

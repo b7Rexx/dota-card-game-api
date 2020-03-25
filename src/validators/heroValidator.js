@@ -1,7 +1,7 @@
 import Joi from '@hapi/joi';
 
 import validate from '../utils/validate';
-import userRepository from '../repositories/userRepository';
+import heroRepository from '../repositories/heroRepository';
 
 // Validation schema
 const schema = Joi.object({
@@ -9,32 +9,32 @@ const schema = Joi.object({
 });
 
 /**
- * Validate create/update user request.
+ * Validate create/update hero request.
  *
  * @param   {Object}   req
  * @param   {Object}   res
  * @param   {Function} next
  * @returns {Promise}
  */
-function userValidator(req, res, next) {
+function heroValidator(req, res, next) {
   return validate(req.body, schema)
     .then(() => next())
     .catch((err) => next(err));
 }
 
 /**
- * Validate users existence.
+ * Validate heros existence.
  *
  * @param   {Object}   req
  * @param   {Object}   res
  * @param   {Function} next
  * @returns {Promise}
  */
-function findUser(req, res, next) {
-  return userRepository
+function findHero(req, res, next) {
+  return heroRepository
     .getById(req.params.id)
     .then(() => next())
     .catch((err) => next(err));
 }
 
-export { findUser, userValidator };
+export { findHero, heroValidator };

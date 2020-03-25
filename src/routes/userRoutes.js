@@ -28,6 +28,6 @@ router.put('/:id', findUser, userValidator, userController.update);
 /**
  * DELETE /api/users/:id
  */
-router.delete('/:id', findUser, userController.deleteUser);
+router.delete('/:id', findUser, userController.remove);
 
 export default router;
