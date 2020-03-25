@@ -5,7 +5,8 @@ import heroTypeRepository from '../repositories/heroTypeRepository';
 
 // Validation schema
 const schema = Joi.object({
-  name: Joi.string().label('Name').max(90).required(),
+  name: Joi.string().label('Name').max(255).required(),
+  key: Joi.string().label('Key').min(3).max(16).required(),
 });
 
 /**

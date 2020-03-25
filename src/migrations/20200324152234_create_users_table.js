@@ -8,7 +8,7 @@ export function up(knex) {
   return knex.schema.createTable('users', (table) => {
     table.increments();
     table.string('name').notNull();
-    table.string('email').notNull();
+    table.string('email').unique().notNull();
     table.string('password').notNull();
     table.boolean('isAdmin').defaultTo(0);
     table.boolean('status').defaultTo(1);

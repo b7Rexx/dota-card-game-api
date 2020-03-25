@@ -1,42 +1,43 @@
 import Joi from '@hapi/joi';
 
 import validate from '../utils/validate';
-import userRepository from '../repositories/userRepository';
+import recordRepository from '../repositories/recordRepository';
 
 // Validation schema
 const schema = Joi.object({
-  name: Joi.string().label('Name').max(255).required(),
-  email: Joi.string().label('Email').email().max(255).required(),
-  password: Joi.string().label('Password').min(6).max(255).required(),
+  game_id: Joi.number().label('GameId').required(),
+  user_id: Joi.number().label('UserId').required(),
+  points: Joi.number().label('Points').required(),
+  winner: Joi.boolean().label('Winner').default(0),
 });
 
 /**
- * Validate create/update user request.
+ * Validate create/update record request.
  *
  * @param   {Object}   req
  * @param   {Object}   res
  * @param   {Function} next
  * @returns {Promise}
  */
-function userValidator(req, res, next) {
+function recordValidator(req, res, next) {
   return validate(req.body, schema)
     .then(() => next())
     .catch((err) => next(err));
 }
 
 /**
- * Validate users existence.
+ * Validate records existence.
  *
  * @param   {Object}   req
  * @param   {Object}   res
  * @param   {Function} next
  * @returns {Promise}
  */
-function findUser(req, res, next) {
-  return userRepository
+function findRecord(req, res, next) {
+  return recordRepository
     .getById(req.params.id)
     .then(() => next())
     .catch((err) => next(err));
 }
 
-export { findUser, userValidator };
+export { findRecord, recordValidator };
