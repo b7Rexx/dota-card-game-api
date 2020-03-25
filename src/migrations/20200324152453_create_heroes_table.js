@@ -10,6 +10,7 @@ export function up(knex) {
     table.string('name').notNull();
     table.integer('hero_type_id').unsigned();
     table.foreign('hero_type_id').references('id').inTable('hero_types').onUpdate('CASCADE');
+    table.boolean('status').defaultTo(1);
     table.timestamp('created_at').notNull().defaultTo(knex.raw('now()'));
     table.timestamp('updated_at').notNull().defaultTo(knex.raw('now()'));
   });

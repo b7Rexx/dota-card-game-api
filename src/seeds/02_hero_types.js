@@ -11,12 +11,15 @@ export function seed(knex) {
       return knex('hero_types').insert([
         {
           name: 'strength',
+          key: 'STR',
         },
         {
           name: 'agility',
+          key: 'AGI',
         },
         {
           name: 'intelligence',
+          key: 'INT',
         },
       ]);
     });
