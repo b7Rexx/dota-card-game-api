@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import * as recordController from '../controllers/records';
 import { findRecord, recordValidator } from '../validators/recordValidator';
+import authenticate from '../middlewares/authenticate';
 
 const router = Router();
 
@@ -18,7 +19,7 @@ router.get('/:id', recordController.fetchById);
 /**
  * POST /api/records
  */
-router.post('/', recordValidator, recordController.create);
+router.post('/', authenticate, recordValidator, recordController.create);
 
 /**
  * PUT /api/records/:id

@@ -1,11 +1,11 @@
-import Authenticatable from '../utils/authenticatable';
+import bookshelf from '../db';
 
 const TABLE_NAME = 'users';
 
 /**
  * User model.
  */
-class User extends Authenticatable {
+class User extends bookshelf.Model {
   /**
    * Get table name.
    */

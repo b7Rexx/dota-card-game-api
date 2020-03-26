@@ -1,5 +1,6 @@
 import User from '../models/user';
 import baseRepository from './baseRepository';
+import { getJwtToken } from '../utils/jwtAuth';
 
 /**
  * returns user repo
@@ -10,7 +11,6 @@ class UserRepository extends baseRepository {
    */
   constructor() {
     super(User);
-    this.user = new User();
   }
 
   /**
@@ -26,7 +26,7 @@ class UserRepository extends baseRepository {
 
     return {
       type: 'bearer',
-      token: this.user.getJwtToken(id),
+      token: getJwtToken(id),
       expire_at: date,
     };
   }
