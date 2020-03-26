@@ -2,7 +2,7 @@ import Hero from '../models/hero';
 import baseRepository from './baseRepository';
 
 /**
- * returns hero repo
+ * Returns hero repo
  */
 class HeroRepository extends baseRepository {
   /**
