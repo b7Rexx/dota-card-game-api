@@ -1,3 +1,4 @@
+import { hashPass } from '../utils/bcrypt';
 /**
  * Delete all existing entries and seed users table.
  *
@@ -12,14 +13,14 @@ export function seed(knex) {
         {
           name: 'Admin',
           email: 'admin@dcg.com',
-          password: 'admin@123',
+          password: hashPass('admin@123'),
           isAdmin: 1,
           updated_at: new Date(),
         },
         {
           name: 'test',
           email: 'test@dcg.com',
-          password: 'test@123',
+          password: hashPass('test@123'),
           isAdmin: 0,
           updated_at: new Date(),
         },

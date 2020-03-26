@@ -65,5 +65,20 @@ class baseRepository {
   remove(id) {
     return new this.modal({ id }).fetch().then((row) => row.destroy());
   }
+
+  /**
+   * Where query.
+   *
+   * @param {*} whereQuery
+   * @returns {Promise}
+   */
+  where(whereQuery) {
+    return new this.modal(whereQuery)
+      .fetch()
+      .then((row) => row)
+      .catch(this.modal.NotFoundError, () => {
+        throw Boom.notFound('Not found');
+      });
+  }
 }
 export default baseRepository;
