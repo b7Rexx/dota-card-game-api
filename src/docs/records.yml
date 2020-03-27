@@ -1,33 +1,36 @@
 definitions:
-  User:
-    title: User
+  Record:
+    title: record
     type: object
     properties:
       id:
         type: integer
-        description: Unique identifier representing a specific user
-      name:
+        description: Unique identifier representing a specific record
+      game_id:
         type: string
-        description: Name of the user
-      email:
-        type: string
-        description: Email of the user
-      password:
-        type: string
-        description: Password of the user
+        description: uuid for a game
+      user_id:
+        type: id
+        description: '#ref/definitions/User'
+      points:
+        type: number
+        description: Points of the record
+      winner:
+        type: boolean
+        description: win/lose stats of the record
       created_at:
         type: string
         format: date-time
-        description: User creation datetime
+        description: record creation datetime
       updated_at:
         type: string
         format: date-time
-        description: User update datetime
+        description: record update datetime
 
-/users:
+/records:
   get:
-    summary: List all users
-    description: Returns users
+    summary: List all records
+    description: Returns records
     produces:
       - application/json
     headers:
@@ -35,35 +38,38 @@ definitions:
         description: valid admin token
     responses:
       200:
-        description: An array of users
+        description: An array of records
         schema:
           type: array
           model:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/Record'
   post:
-    summary: Create a new user
-    description: Create an user
+    summary: Create a new record
+    description: Create an record
     produces:
       - application/json
+    headers:
+      - Token: jwt
+        description: valid token
     parameters:
-      - name: name
-        description: POST params for an user
+      - name: user_id
+        description: POST params for an record
+        from: token
+        required: true
+      - name: points
+        description: POST params for an record
         in: body
         required: true
-      - name: email
-        description: POST params for an user
-        in: body
-        required: true
-      - name: password
-        description: POST params for an user
+      - name: winner
+        description: POST params for an record
         in: body
         required: true
     responses:
       201:
-        description: Newly created user object
+        description: Newly created record object
         schema:
           type: object
-          $ref: '#/definitions/User'
+          $ref: '#/definitions/record'
       400:
         description: Bad request
         schema:
@@ -73,29 +79,29 @@ definitions:
         schema:
           $ref: '#/definitions/ServerError'
 
-/users/{id}:
+/records/{id}:
   get:
-    summary: Get an user
-    description: Get user information
+    summary: Get an record
+    description: Get record information
     produces:
       - application/json
     headers:
       - Token: jwt
-        description: valid token
+        description: valid admin token
     parameters:
       - name: id
-        description: Unique identifier of the user
+        description: Unique identifier of the record
         in: path
         required: true
         type: integer
     responses:
       200:
-        description: User object
+        description: record object
         schema:
           type: object
-          $ref: '#/definitions/User'
+          $ref: '#/definitions/record'
       404:
-        description: User not found
+        description: record not found
         schema:
           $ref: '#/definitions/NotFoundError'
       500:
@@ -104,49 +110,43 @@ definitions:
           $ref: '#/definitions/ServerError'
 
   put:
-    summary: Update an user
-    description: Update an user
+    summary: Update an record
+    description: Update an record
     produces:
       - application/json
     headers:
       - Token: jwt
-        description: valid token
+        description: valid admin token
     parameters:
-      - name: id
-        description: Unique identifier of the user
+      - name: user_id
+        description: Unique identifier of the record
         in: path
         required: true
         type: integer
-      - name: name
-        description: PUT params for an user
+      - name: game_id
+        description: PUT params for an record
         in: body
         required: true
-        schema:
-          $ref: '#/definitions/NewUser'
-      - name: email
-        description: PUT params for an user
+      - name: points
+        description: PUT params for an record
         in: body
         required: true
-        schema:
-          $ref: '#/definitions/NewUser'
-      - name: password
-        description: PUT params for an user
+      - name: winner
+        description: PUT params for an record
         in: body
         required: true
-        schema:
-          $ref: '#/definitions/NewUser'
     responses:
       200:
-        description: Updated user object
+        description: Updated record object
         schema:
           type: object
-          $ref: '#/definitions/User'
+          $ref: '#/definitions/record'
       400:
         description: Bad request
         schema:
           $ref: '#/definitions/ValidationError'
       404:
-        description: User not found
+        description: record not found
         schema:
           $ref: '#/definitions/NotFoundError'
       500:
@@ -155,8 +155,8 @@ definitions:
           $ref: '#/definitions/ServerError'
 
   delete:
-    summary: Delete an user
-    description: Delete an user
+    summary: Delete an record
+    description: Delete an record
     produces:
       - application/json
     headers:
@@ -164,29 +164,29 @@ definitions:
         description: valid admin token
     parameters:
       - name: id
-        description: Unique identifier of the user
+        description: Unique identifier of the record
         in: path
         required: true
         type: integer
     responses:
       204:
-        description: User deleted (no-content)
+        description: record deleted (no-content)
       400:
         description: Bad request
         schema:
           $ref: '#/definitions/ValidationError'
       404:
-        description: User not found
+        description: record not found
         schema:
           $ref: '#/definitions/NotFoundError'
       500:
         description: Internal server error
         schema:
           $ref: '#/definitions/ServerError'
-/users/paginate:
+/records/paginate:
   get:
-    summary: List all users with pagination and order
-    description: Returns users
+    summary: List all records with pagination and order
+    description: Returns records
     produces:
       - application/json
     headers:
@@ -205,17 +205,17 @@ definitions:
         type: integer
     responses:
       200:
-        description: An array of users
+        description: An array of records
         schema:
           type: array
           model:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/record'
       400:
         description: Bad request
         schema:
           $ref: '#/definitions/ValidationError'
       404:
-        description: User not found
+        description: record not found
         schema:
           $ref: '#/definitions/NotFoundError'
       500:

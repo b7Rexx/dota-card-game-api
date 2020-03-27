@@ -1,69 +1,62 @@
 definitions:
-  User:
-    title: User
+  Hero:
+    title: heroes
     type: object
     properties:
       id:
         type: integer
-        description: Unique identifier representing a specific user
+        description: Unique identifier representing a specific heroes
       name:
         type: string
-        description: Name of the user
-      email:
-        type: string
-        description: Email of the user
-      password:
-        type: string
-        description: Password of the user
+        description: Name of hero
+      hero_type_id:
+        type: id
+        description: '#ref/definitions/Hero'
       created_at:
         type: string
         format: date-time
-        description: User creation datetime
+        description: heroes creation datetime
       updated_at:
         type: string
         format: date-time
-        description: User update datetime
+        description: heroes update datetime
 
-/users:
+/heroes:
   get:
-    summary: List all users
-    description: Returns users
+    summary: List all heroes
+    description: Returns heroes
+    produces:
+      - application/json
+    responses:
+      200:
+        description: An array of heroes
+        schema:
+          type: array
+          model:
+            $ref: '#/definitions/heroes'
+  post:
+    summary: Create a new hero
+    description: Create a hero
     produces:
       - application/json
     headers:
       - Token: jwt
         description: valid admin token
-    responses:
-      200:
-        description: An array of users
-        schema:
-          type: array
-          model:
-            $ref: '#/definitions/User'
-  post:
-    summary: Create a new user
-    description: Create an user
-    produces:
-      - application/json
     parameters:
       - name: name
-        description: POST params for an user
-        in: body
+        description: POST params for an heroes
+        from: token
         required: true
-      - name: email
-        description: POST params for an user
-        in: body
-        required: true
-      - name: password
-        description: POST params for an user
+      - name: hero_type_id
+        description: POST params for an heroes
         in: body
         required: true
     responses:
       201:
-        description: Newly created user object
+        description: Newly created hero object
         schema:
           type: object
-          $ref: '#/definitions/User'
+          $ref: '#/definitions/heroes'
       400:
         description: Bad request
         schema:
@@ -73,29 +66,29 @@ definitions:
         schema:
           $ref: '#/definitions/ServerError'
 
-/users/{id}:
+/heroes/{id}:
   get:
-    summary: Get an user
-    description: Get user information
+    summary: Get a hero
+    description: Get hero information
     produces:
       - application/json
     headers:
       - Token: jwt
-        description: valid token
+        description: valid admin token
     parameters:
       - name: id
-        description: Unique identifier of the user
+        description: Unique identifier of the heroes
         in: path
         required: true
         type: integer
     responses:
       200:
-        description: User object
+        description: heroes object
         schema:
           type: object
-          $ref: '#/definitions/User'
+          $ref: '#/definitions/heroes'
       404:
-        description: User not found
+        description: heroes not found
         schema:
           $ref: '#/definitions/NotFoundError'
       500:
@@ -104,49 +97,39 @@ definitions:
           $ref: '#/definitions/ServerError'
 
   put:
-    summary: Update an user
-    description: Update an user
+    summary: Update a hero
+    description: Update a  hero
     produces:
       - application/json
     headers:
       - Token: jwt
-        description: valid token
+        description: valid admin token
     parameters:
       - name: id
-        description: Unique identifier of the user
+        description: Unique identifier of the hero
         in: path
         required: true
         type: integer
       - name: name
-        description: PUT params for an user
+        description: PUT params for an heroes
         in: body
         required: true
-        schema:
-          $ref: '#/definitions/NewUser'
-      - name: email
-        description: PUT params for an user
+      - name: hero_type_id
+        description: PUT params for an heroes
         in: body
         required: true
-        schema:
-          $ref: '#/definitions/NewUser'
-      - name: password
-        description: PUT params for an user
-        in: body
-        required: true
-        schema:
-          $ref: '#/definitions/NewUser'
     responses:
       200:
-        description: Updated user object
+        description: Updated heroes object
         schema:
           type: object
-          $ref: '#/definitions/User'
+          $ref: '#/definitions/heroes'
       400:
         description: Bad request
         schema:
           $ref: '#/definitions/ValidationError'
       404:
-        description: User not found
+        description: heroes not found
         schema:
           $ref: '#/definitions/NotFoundError'
       500:
@@ -155,8 +138,8 @@ definitions:
           $ref: '#/definitions/ServerError'
 
   delete:
-    summary: Delete an user
-    description: Delete an user
+    summary: Delete an heroes
+    description: Delete an heroes
     produces:
       - application/json
     headers:
@@ -164,29 +147,29 @@ definitions:
         description: valid admin token
     parameters:
       - name: id
-        description: Unique identifier of the user
+        description: Unique identifier of the heroes
         in: path
         required: true
         type: integer
     responses:
       204:
-        description: User deleted (no-content)
+        description: heroes deleted (no-content)
       400:
         description: Bad request
         schema:
           $ref: '#/definitions/ValidationError'
       404:
-        description: User not found
+        description: heroes not found
         schema:
           $ref: '#/definitions/NotFoundError'
       500:
         description: Internal server error
         schema:
           $ref: '#/definitions/ServerError'
-/users/paginate:
+/heroes/paginate:
   get:
-    summary: List all users with pagination and order
-    description: Returns users
+    summary: List all heroes with pagination and order
+    description: Returns heroes
     produces:
       - application/json
     headers:
@@ -205,17 +188,17 @@ definitions:
         type: integer
     responses:
       200:
-        description: An array of users
+        description: An array of heroes
         schema:
           type: array
           model:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/heroes'
       400:
         description: Bad request
         schema:
           $ref: '#/definitions/ValidationError'
       404:
-        description: User not found
+        description: heroes not found
         schema:
           $ref: '#/definitions/NotFoundError'
       500:

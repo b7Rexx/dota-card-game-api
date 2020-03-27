@@ -1,0 +1,31 @@
+/auth/login:
+  post:
+    summary: Login user
+    description: Login user (player/admin)
+    produces:
+      - application/json
+    parameters:
+      - name: email
+        description: POST params for an user
+        in: body
+        required: true
+      - name: password
+        description: POST params for an user
+        in: body
+        required: true
+    responses:
+      201:
+        description: Login response
+        schema:
+          type: object
+          token: 'jwt response'
+          expired_at: Date
+          $ref: '#/definitions/User'
+      400:
+        description: Bad request
+        schema:
+          $ref: '#/definitions/ValidationError'
+      500:
+        description: Internal server error
+        schema:
+          $ref: '#/definitions/ServerError'

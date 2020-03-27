@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import * as heroController from '../controllers/heroes';
 import { findHero, heroValidator } from '../validators/heroValidator';
+import adminAuthenticate from '../middlewares/adminAuthenticate';
 
 const router = Router();
 
@@ -20,21 +21,21 @@ router.get('/paginate', heroController.paginate);
 /**
  * GET /api/heroes/:id
  */
-router.get('/:id', heroController.fetchById);
+router.get('/:id', adminAuthenticate, heroController.fetchById);
 
 /**
  * POST /api/heroes
  */
-router.post('/', heroValidator, heroController.create);
+router.post('/', adminAuthenticate, heroValidator, heroController.create);
 
 /**
  * PUT /api/heroes/:id
  */
-router.put('/:id', findHero, heroValidator, heroController.update);
+router.put('/:id', adminAuthenticate, findHero, heroValidator, heroController.update);
 
 /**
  * DELETE /api/heroes/:id
  */
-router.delete('/:id', findHero, heroController.remove);
+router.delete('/:id', adminAuthenticate, findHero, heroController.remove);
 
 export default router;
