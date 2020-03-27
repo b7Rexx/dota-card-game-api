@@ -9,6 +9,8 @@ class baseRepository {
    */
   constructor(modal) {
     this.modal = modal;
+    this.defaultOrder = 'id'; // order by in paginate function
+    this.withRelated = [];
   }
 
   /**
@@ -28,7 +30,9 @@ class baseRepository {
    */
   getById(id) {
     return new this.modal({ id })
-      .fetch()
+      .fetch({
+        withRelated: this.withRelated,
+      })
       .then((row) => row)
       .catch(this.modal.NotFoundError, () => {
         throw Boom.notFound('Not found');
@@ -49,7 +53,7 @@ class baseRepository {
    * Update a row.
    *
    * @param   {Number|String}  id
-   * @param   {Object}         row
+   * @param   {Object} row
    * @returns {Promise}
    */
   update(id, row) {
@@ -78,6 +82,30 @@ class baseRepository {
       .then((row) => row)
       .catch(this.modal.NotFoundError, () => {
         throw Boom.notFound('Not found');
+      });
+  }
+
+  /**
+   * Paginate rows.
+   * Default page = 1, no of rows per page = 10.
+   *
+   * @param {*} page
+   * @param {*} pageSize
+   */
+  paginate(page = 1, pageSize = 10) {
+    return this.modal
+      .query(function () {})
+      .orderBy(`-${this.defaultOrder}`)
+      .fetchPage({
+        pageSize: parseInt(pageSize) || 10,
+        page: parseInt(page) || 1,
+        withRelated: this.withRelated,
+      })
+      .then((data) => {
+        return {
+          models: [...data.models],
+          pagination: { ...data.pagination },
+        };
       });
   }
 }

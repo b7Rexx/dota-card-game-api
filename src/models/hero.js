@@ -1,6 +1,6 @@
 import bookshelf from '../db';
-import heroType from './hero_type';
-import heroImages from './hero_image';
+import HeroType from './hero_type';
+import HeroImages from './hero_image';
 
 const TABLE_NAME = 'heroes';
 
@@ -13,9 +13,10 @@ class Hero extends bookshelf.Model {
    */
   constructor() {
     super();
-    this.heroType = heroType;
-    this.heroImages = heroImages;
+    this.heroType = HeroType;
+    this.heroImages = HeroImages;
   }
+
   /**
    * Get table name.
    */

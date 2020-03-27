@@ -11,6 +11,13 @@ const router = Router();
 router.get('/', userController.fetchAll);
 
 /**
+ * GET /api/users/paginate
+ * @params {number} page default = 1
+ * @params {number} pagesize default = 10
+ */
+router.get('/paginate', userController.paginate);
+
+/**
  * GET /api/users/:id
  */
 router.get('/:id', userController.fetchById);

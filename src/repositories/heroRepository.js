@@ -10,6 +10,8 @@ class HeroRepository extends baseRepository {
    */
   constructor() {
     super(Hero);
+    this.defaultOrder = 'name';
+    this.withRelated = ['relateHeroType', 'relateHeroImages'];
   }
 }
 export default new HeroRepository();

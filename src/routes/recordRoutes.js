@@ -12,6 +12,13 @@ const router = Router();
 router.get('/', recordController.fetchAll);
 
 /**
+ * GET /api/records/paginate
+ * @params {number} page default = 1
+ * @params {number} pagesize default = 10
+ */
+router.get('/paginate', recordController.paginate);
+
+/**
  * GET /api/records/:id
  */
 router.get('/:id', recordController.fetchById);
