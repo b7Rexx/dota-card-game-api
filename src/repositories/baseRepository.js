@@ -19,7 +19,11 @@ class baseRepository {
    * @returns {Promise}
    */
   getAll() {
-    return this.modal.fetchAll();
+    return new this.modal().fetchAll().then((data) => {
+      return {
+        model: [...data.models],
+      };
+    });
   }
 
   /**
@@ -33,7 +37,11 @@ class baseRepository {
       .fetch({
         withRelated: this.withRelated,
       })
-      .then((row) => row)
+      .then((data) => {
+        return {
+          model: data,
+        };
+      })
       .catch(this.modal.NotFoundError, () => {
         throw Boom.notFound('Not found');
       });
@@ -79,7 +87,11 @@ class baseRepository {
   where(whereQuery) {
     return new this.modal(whereQuery)
       .fetch()
-      .then((row) => row)
+      .then((data) => {
+        return {
+          model: data,
+        };
+      })
       .catch(this.modal.NotFoundError, () => {
         throw Boom.notFound('Not found');
       });
@@ -103,7 +115,7 @@ class baseRepository {
       })
       .then((data) => {
         return {
-          models: [...data.models],
+          model: [...data.models],
           pagination: { ...data.pagination },
         };
       });

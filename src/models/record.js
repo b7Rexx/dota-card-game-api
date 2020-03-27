@@ -8,14 +8,6 @@ const TABLE_NAME = 'records';
  */
 class Record extends bookshelf.Model {
   /**
-   *RElation Model definitions.
-   */
-  constructor() {
-    super();
-    this.user = User;
-  }
-
-  /**
    * Get table name.
    */
   get tableName() {
@@ -33,7 +25,7 @@ class Record extends bookshelf.Model {
    * Get many to one relation user.
    */
   relateUser() {
-    return this.belongsTo(this.user);
+    return this.belongsTo(User);
   }
 }
 

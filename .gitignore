@@ -42,4 +42,4 @@ coverage
 **/.history
 
 #image files
-/public/files/
+/public/files/*
