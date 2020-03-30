@@ -1,0 +1,207 @@
+definitions:
+  Hero:
+    title: heroes
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Unique identifier representing a specific heroes
+      name:
+        type: string
+        description: Name of hero
+      hero_type_id:
+        type: id
+        description: '#ref/definitions/Hero'
+      created_at:
+        type: string
+        format: date-time
+        description: heroes creation datetime
+      updated_at:
+        type: string
+        format: date-time
+        description: heroes update datetime
+
+/heroes:
+  get:
+    summary: List all heroes
+    description: Returns heroes
+    produces:
+      - application/json
+    responses:
+      200:
+        description: An array of heroes
+        schema:
+          type: array
+          model:
+            $ref: '#/definitions/heroes'
+  post:
+    summary: Create a new hero
+    description: Create a hero
+    produces:
+      - application/json
+    headers:
+      - Token: jwt
+        description: valid admin token
+    parameters:
+      - name: name
+        description: POST params for an heroes
+        from: token
+        required: true
+      - name: hero_type_id
+        description: POST params for an heroes
+        in: body
+        required: true
+    responses:
+      201:
+        description: Newly created hero object
+        schema:
+          type: object
+          $ref: '#/definitions/heroes'
+      400:
+        description: Bad request
+        schema:
+          $ref: '#/definitions/ValidationError'
+      500:
+        description: Internal server error
+        schema:
+          $ref: '#/definitions/ServerError'
+
+/heroes/{id}:
+  get:
+    summary: Get a hero
+    description: Get hero information
+    produces:
+      - application/json
+    headers:
+      - Token: jwt
+        description: valid admin token
+    parameters:
+      - name: id
+        description: Unique identifier of the heroes
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: heroes object
+        schema:
+          type: object
+          $ref: '#/definitions/heroes'
+      404:
+        description: heroes not found
+        schema:
+          $ref: '#/definitions/NotFoundError'
+      500:
+        description: Internal server error
+        schema:
+          $ref: '#/definitions/ServerError'
+
+  put:
+    summary: Update a hero
+    description: Update a  hero
+    produces:
+      - application/json
+    headers:
+      - Token: jwt
+        description: valid admin token
+    parameters:
+      - name: id
+        description: Unique identifier of the hero
+        in: path
+        required: true
+        type: integer
+      - name: name
+        description: PUT params for an heroes
+        in: body
+        required: true
+      - name: hero_type_id
+        description: PUT params for an heroes
+        in: body
+        required: true
+    responses:
+      200:
+        description: Updated heroes object
+        schema:
+          type: object
+          $ref: '#/definitions/heroes'
+      400:
+        description: Bad request
+        schema:
+          $ref: '#/definitions/ValidationError'
+      404:
+        description: heroes not found
+        schema:
+          $ref: '#/definitions/NotFoundError'
+      500:
+        description: Internal server error
+        schema:
+          $ref: '#/definitions/ServerError'
+
+  delete:
+    summary: Delete an heroes
+    description: Delete an heroes
+    produces:
+      - application/json
+    headers:
+      - Token: jwt
+        description: valid admin token
+    parameters:
+      - name: id
+        description: Unique identifier of the heroes
+        in: path
+        required: true
+        type: integer
+    responses:
+      204:
+        description: heroes deleted (no-content)
+      400:
+        description: Bad request
+        schema:
+          $ref: '#/definitions/ValidationError'
+      404:
+        description: heroes not found
+        schema:
+          $ref: '#/definitions/NotFoundError'
+      500:
+        description: Internal server error
+        schema:
+          $ref: '#/definitions/ServerError'
+/heroes/paginate:
+  get:
+    summary: List all heroes with pagination and order
+    description: Returns heroes
+    produces:
+      - application/json
+    headers:
+      - Token: jwt
+        description: valid admin token
+    parameters:
+      - name: page
+        description: Page number
+        in: query
+        required: optional
+        type: integer
+      - name: pagesize
+        description: number of items in single page
+        in: query
+        required: optional
+        type: integer
+    responses:
+      200:
+        description: An array of heroes
+        schema:
+          type: array
+          model:
+            $ref: '#/definitions/heroes'
+      400:
+        description: Bad request
+        schema:
+          $ref: '#/definitions/ValidationError'
+      404:
+        description: heroes not found
+        schema:
+          $ref: '#/definitions/NotFoundError'
+      500:
+        description: Internal server error
+        schema:
+          $ref: '#/definitions/ServerError'

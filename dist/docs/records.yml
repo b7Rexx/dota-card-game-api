@@ -1,0 +1,224 @@
+definitions:
+  Record:
+    title: record
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Unique identifier representing a specific record
+      game_id:
+        type: string
+        description: uuid for a game
+      user_id:
+        type: id
+        description: '#ref/definitions/User'
+      points:
+        type: number
+        description: Points of the record
+      winner:
+        type: boolean
+        description: win/lose stats of the record
+      created_at:
+        type: string
+        format: date-time
+        description: record creation datetime
+      updated_at:
+        type: string
+        format: date-time
+        description: record update datetime
+
+/records:
+  get:
+    summary: List all records
+    description: Returns records
+    produces:
+      - application/json
+    headers:
+      - Token: jwt
+        description: valid admin token
+    responses:
+      200:
+        description: An array of records
+        schema:
+          type: array
+          model:
+            $ref: '#/definitions/Record'
+  post:
+    summary: Create a new record
+    description: Create an record
+    produces:
+      - application/json
+    headers:
+      - Token: jwt
+        description: valid token
+    parameters:
+      - name: user_id
+        description: POST params for an record
+        from: token
+        required: true
+      - name: points
+        description: POST params for an record
+        in: body
+        required: true
+      - name: winner
+        description: POST params for an record
+        in: body
+        required: true
+    responses:
+      201:
+        description: Newly created record object
+        schema:
+          type: object
+          $ref: '#/definitions/record'
+      400:
+        description: Bad request
+        schema:
+          $ref: '#/definitions/ValidationError'
+      500:
+        description: Internal server error
+        schema:
+          $ref: '#/definitions/ServerError'
+
+/records/{id}:
+  get:
+    summary: Get an record
+    description: Get record information
+    produces:
+      - application/json
+    headers:
+      - Token: jwt
+        description: valid admin token
+    parameters:
+      - name: id
+        description: Unique identifier of the record
+        in: path
+        required: true
+        type: integer
+    responses:
+      200:
+        description: record object
+        schema:
+          type: object
+          $ref: '#/definitions/record'
+      404:
+        description: record not found
+        schema:
+          $ref: '#/definitions/NotFoundError'
+      500:
+        description: Internal server error
+        schema:
+          $ref: '#/definitions/ServerError'
+
+  put:
+    summary: Update an record
+    description: Update an record
+    produces:
+      - application/json
+    headers:
+      - Token: jwt
+        description: valid admin token
+    parameters:
+      - name: user_id
+        description: Unique identifier of the record
+        in: path
+        required: true
+        type: integer
+      - name: game_id
+        description: PUT params for an record
+        in: body
+        required: true
+      - name: points
+        description: PUT params for an record
+        in: body
+        required: true
+      - name: winner
+        description: PUT params for an record
+        in: body
+        required: true
+    responses:
+      200:
+        description: Updated record object
+        schema:
+          type: object
+          $ref: '#/definitions/record'
+      400:
+        description: Bad request
+        schema:
+          $ref: '#/definitions/ValidationError'
+      404:
+        description: record not found
+        schema:
+          $ref: '#/definitions/NotFoundError'
+      500:
+        description: Internal server error
+        schema:
+          $ref: '#/definitions/ServerError'
+
+  delete:
+    summary: Delete an record
+    description: Delete an record
+    produces:
+      - application/json
+    headers:
+      - Token: jwt
+        description: valid admin token
+    parameters:
+      - name: id
+        description: Unique identifier of the record
+        in: path
+        required: true
+        type: integer
+    responses:
+      204:
+        description: record deleted (no-content)
+      400:
+        description: Bad request
+        schema:
+          $ref: '#/definitions/ValidationError'
+      404:
+        description: record not found
+        schema:
+          $ref: '#/definitions/NotFoundError'
+      500:
+        description: Internal server error
+        schema:
+          $ref: '#/definitions/ServerError'
+/records/paginate:
+  get:
+    summary: List all records with pagination and order
+    description: Returns records
+    produces:
+      - application/json
+    headers:
+      - Token: jwt
+        description: valid admin token
+    parameters:
+      - name: page
+        description: Page number
+        in: query
+        required: optional
+        type: integer
+      - name: pagesize
+        description: number of items in single page
+        in: query
+        required: optional
+        type: integer
+    responses:
+      200:
+        description: An array of records
+        schema:
+          type: array
+          model:
+            $ref: '#/definitions/record'
+      400:
+        description: Bad request
+        schema:
+          $ref: '#/definitions/ValidationError'
+      404:
+        description: record not found
+        schema:
+          $ref: '#/definitions/NotFoundError'
+      500:
+        description: Internal server error
+        schema:
+          $ref: '#/definitions/ServerError'
