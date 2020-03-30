@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Dota Card Game Api",
   "scripts": {
-    "start": "node build",
+    "start": "node build/index.js",
     "lint": "eslint src test",
     "lint:fix": "eslint src test --fix",
     "codecov": "cat coverage/*/lcov.info | codecov",
