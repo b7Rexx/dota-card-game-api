@@ -21,5 +21,6 @@ env: >
 
 before_script:
   - cp .env.example .env
-script:
   - npm install
+script:
+  - npm run build
