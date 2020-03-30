@@ -71,3 +71,17 @@ export function remove(req, res, next) {
     .then((data) => res.status(HttpStatus.NO_CONTENT).json({ data }))
     .catch((err) => next(err));
 }
+
+/**
+ * Get Paginated records.
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+export function paginate(req, res, next) {
+  recordRepository
+    .paginate(req.query.page, req.query.pagesize)
+    .then((data) => res.json({ data }))
+    .catch((err) => next(err));
+}

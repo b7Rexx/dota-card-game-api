@@ -10,6 +10,7 @@ class RecordRepository extends baseRepository {
    */
   constructor() {
     super(Record);
+    this.withRelated = ['relateUser'];
   }
 }
 export default new RecordRepository();

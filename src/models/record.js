@@ -1,4 +1,5 @@
 import bookshelf from '../db';
+import User from '../models/user';
 
 const TABLE_NAME = 'records';
 
@@ -18,6 +19,13 @@ class Record extends bookshelf.Model {
    */
   get hasTimestamps() {
     return true;
+  }
+
+  /**
+   * Get many to one relation user.
+   */
+  relateUser() {
+    return this.belongsTo(User);
   }
 }
 

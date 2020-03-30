@@ -7,6 +7,7 @@ import heroTypeRoutes from './routes/heroTypeRoutes';
 import heroImageRoutes from './routes/heroImageRoutes';
 import recordRoutes from './routes/recordRoutes';
 import authRoutes from './routes/authRoutes';
+import adminAuthenticate from './middlewares/adminAuthenticate';
 
 /**
  * Contains all API routes for the application.
@@ -31,10 +32,12 @@ router.get('/', (req, res) => {
 });
 
 router.use('/auth', authRoutes);
-router.use('/users', userRoutes);
 router.use('/heroes', heroRoutes);
-router.use('/herotypes', heroTypeRoutes);
-router.use('/heroimages', heroImageRoutes);
 router.use('/records', recordRoutes);
+
+// only admin authorized routes
+router.use('/users', userRoutes);
+router.use('/heroimages', adminAuthenticate, heroImageRoutes);
+router.use('/herotypes', adminAuthenticate, heroTypeRoutes);
 
 export default router;
