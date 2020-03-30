@@ -14,10 +14,12 @@
     "prettier": "prettier --write **/*.{js,json,yml,yaml,md}",
     "make:seeder": "yarn knex seed:make --knexfile src/knexfile.js",
     "make:migration": "yarn knex migrate:make --knexfile src/knexfile.js",
-    "build": "rimraf dist && babel src --copy-files --out-dir dist --source-maps",
+    "build": "babel src --copy-files --out-dir dist --source-maps",
     "start:dev": "nodemon --watch .env --watch src --exec babel-node src --source-maps",
     "test": "cross-env NODE_ENV=test mocha --exit --recursive --require @babel/register test",
-    "test:coverage": "cross-env NODE_ENV=test nyc --require @babel/register --reporter lcov --reporter text mocha --exit --recursive test"
+    "test:coverage": "cross-env NODE_ENV=test nyc --require @babel/register --reporter lcov --reporter text mocha --exit --recursive test",
+    "build:prod": "npm run clean && npm run build",
+    "clean": "rimraf dist"
   },
   "husky": {
     "hooks": {
