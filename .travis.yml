@@ -18,10 +18,10 @@ env: >
   DB_PASSWORD='k1XNr1pcb9'
 
 before_script:
-  - cp .env.example .env
   - npm install
+  - cp .env.example .env
 script:
-  - npm run build
+  - npm run build:prod
 deploy:
   provider: pages
   skip_cleanup: true
