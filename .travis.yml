@@ -18,6 +18,8 @@ env: >
   DB_PASSWORD='k1XNr1pcb9'
 
 before_script:
+  - npm install -g babel-cli
+  - npm install -g rimraf
   - npm install
   - cp .env.example .env
 script:
