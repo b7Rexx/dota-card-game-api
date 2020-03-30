@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Dota Card Game Api",
   "scripts": {
-    "start": "node dist",
+    "start": "node server.js",
     "lint": "eslint src test",
     "lint:fix": "eslint src test --fix",
     "codecov": "cat coverage/*/lcov.info | codecov",
@@ -20,6 +20,11 @@
     "test:coverage": "cross-env NODE_ENV=test nyc --require @babel/register --reporter lcov --reporter text mocha --exit --recursive test",
     "build:prod": "npm run clean && npm run build",
     "clean": "rimraf dist"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.js": [
