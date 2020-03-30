@@ -4,7 +4,9 @@ node_js:
 branches:
   only:
     - master
-
+cache:
+  directories:
+    - node_modules
 env: >
   NODE_ENV=production
   APP_NAME='Dota Card Game Api'
