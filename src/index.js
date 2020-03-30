@@ -72,9 +72,10 @@ app.use(Sentry.Handlers.errorHandler());
 app.use(errorHandler.genericErrorHandler);
 app.use(errorHandler.methodNotAllowed);
 
-app.listen(app.get('port'), app.get('host'), () => {
-  logger.info(`Server started at http://${app.get('host')}:${app.get('port')}/api`);
-});
+// app.listen(app.get('port'), app.get('host'), () => {
+//   logger.info(`Server started at http://${app.get('host')}:${app.get('port')}/api`);
+// });
+app.listen(app.get('port'));
 
 // Catch unhandled rejections
 process.on('unhandledRejection', (err) => {
