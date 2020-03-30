@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Launch Debug Program",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/dist/index.js",
+      "program": "${workspaceFolder}/build/index.js",
       "sourceMaps": true,
       "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/nodemon"
     }

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Dota Card Game Api",
   "scripts": {
-    "start": "node dist",
+    "start": "node build",
     "lint": "eslint src test",
     "lint:fix": "eslint src test --fix",
     "codecov": "cat coverage/*/lcov.info | codecov",
@@ -14,7 +14,7 @@
     "prettier": "prettier --write **/*.{js,json,yml,yaml,md}",
     "make:seeder": "yarn knex seed:make --knexfile src/knexfile.js",
     "make:migration": "yarn knex migrate:make --knexfile src/knexfile.js",
-    "build": "rimraf dist && babel src --copy-files --out-dir dist --source-maps",
+    "build": "rimraf build && babel src --copy-files --out-dir build --source-maps",
     "start:dev": "nodemon --watch .env --watch src --exec babel-node src --source-maps",
     "test": "cross-env NODE_ENV=test mocha --exit --recursive --require @babel/register test",
     "test:coverage": "cross-env NODE_ENV=test nyc --require @babel/register --reporter lcov --reporter text mocha --exit --recursive test"
@@ -66,7 +66,7 @@
     "serve-favicon": "^2.5.0",
     "sharp": "^0.25.2",
     "swagger-jsdoc": "^3.5.0",
-    "swagger-ui-dist": "^3.25.0",
+    "swagger-ui-build": "^3.25.0",
     "uuid": "^7.0.2",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^4.4.2"
