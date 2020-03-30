@@ -19,6 +19,8 @@ node_modules
 .idea
 
 # Build directory
+build 
+dist
 
 # Dotenv configuration
 .env
