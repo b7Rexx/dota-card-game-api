@@ -11,11 +11,6 @@ env: >
   NODE_ENV=production
   APP_NAME='Dota Card Game Api'
   APP_VERSION='1.0.0'
-  DB_PORT='3306'
-  DB_HOST='remotemysql.com'
-  DB_NAME='8fboJ1HdkT'
-  DB_USER='8fboJ1HdkT'
-  DB_PASSWORD='k1XNr1pcb9'
 
 before_script:
   - npm install
