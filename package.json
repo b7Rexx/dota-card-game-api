@@ -21,11 +21,6 @@
     "build:prod": "npm run clean && npm run build",
     "clean": "rimraf dist"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.js": [
       "eslint --fix",
