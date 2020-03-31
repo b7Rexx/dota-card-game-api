@@ -2,11 +2,11 @@ require('dotenv').config({ path: __dirname + '/../.env' });
 
 // Default configuration for database connection
 const connection = {
-  port: process.env.DB_PORT || '3306',
-  host: process.env.DB_HOST || 'remotemysql.com',
-  user: process.env.DB_USER || '8fboJ1HdkT',
-  password: process.env.DB_PASSWORD || 'k1XNr1pcb9',
-  database: process.env.DB_NAME || '8fboJ1HdkT',
+  port: process.env.DB_PORT,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   charset: 'utf8',
   timezone: 'UTC',
 };
@@ -28,7 +28,7 @@ const connection = {
  */
 module.exports = {
   connection,
-  client: process.env.DB_CLIENT || 'mysql',
+  client: process.env.DB_CLIENT,
   migrations: {
     tableName: 'migrations',
     directory: './migrations',
