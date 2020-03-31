@@ -1,11 +1,6 @@
 language: node_js
-
 node_js:
-  - node
-
-services:
-  - mysql
-
+  - 12
 branches:
   only:
     - master
@@ -14,16 +9,9 @@ env: >
   NODE_ENV=production
   APP_NAME='Dota Card Game Api'
   APP_VERSION='1.0.0'
-  APP_PORT='80'
-  APP_HOST='127.0.0.1'
-  APP_URL='http://localhost:80'
-
-before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH="$HOME/.yarn/bin:$PATH"
 
 before_script:
   - cp .env.example .env
-
+  - npm install
 script:
-  - npm start
+  - npm run build

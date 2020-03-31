@@ -15,7 +15,7 @@
     "prettier": "prettier --write **/*.{js,json,yml,yaml,md}",
     "make:seeder": "yarn knex seed:make --knexfile src/knexfile.js",
     "make:migration": "yarn knex migrate:make --knexfile src/knexfile.js",
-    "build": "rimraf dist && babel src --copy-files --out-dir dist --source-maps",
+    "build": "rimraf build && babel src --copy-files --out-dir build --source-maps",
     "start:dev": "nodemon --watch .env --watch src --exec babel-node src --source-maps",
     "test": "cross-env NODE_ENV=test mocha --exit --recursive --require @babel/register test",
     "test:coverage": "cross-env NODE_ENV=test nyc --require @babel/register --reporter lcov --reporter text mocha --exit --recursive test"
@@ -70,14 +70,15 @@
     "swagger-ui-dist": "^3.25.0",
     "uuid": "^7.0.2",
     "winston": "^3.2.1",
-    "winston-daily-rotate-file": "^4.4.2"
-  },
-  "devDependencies": {
+    "winston-daily-rotate-file": "^4.4.2",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.0",
     "@babel/register": "^7.9.0",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
     "chai": "^4.2.0",
     "codecov": "^3.6.5",
     "cross-env": "^7.0.2",
@@ -90,7 +91,6 @@
     "nodemon": "^2.0.2",
     "nyc": "^15.0.0",
     "prettier": "^2.0.1",
-    "rimraf": "^3.0.2",
     "supertest": "^4.0.2"
   },
   "engines": {

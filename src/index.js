@@ -23,8 +23,8 @@ Sentry.init({ dsn: process.env.SENTRY_DSN });
 
 const app = express();
 
-const APP_PORT =
-  (process.env.NODE_ENV === 'test' ? process.env.TEST_APP_PORT : process.env.APP_PORT) || process.env.PORT || '3000';
+const APP_PORT = process.env.PORT || 3000;
+// (process.env.NODE_ENV === 'test' ? process.env.TEST_APP_PORT : process.env.APP_PORT) || process.env.PORT || '3000';
 const APP_HOST = process.env.APP_HOST || '0.0.0.0';
 
 const pathToSwaggerUi = require('swagger-ui-dist').absolutePath();
@@ -72,8 +72,8 @@ app.use(Sentry.Handlers.errorHandler());
 app.use(errorHandler.genericErrorHandler);
 app.use(errorHandler.methodNotAllowed);
 
-app.listen(app.get('port'), app.get('host'), () => {
-  logger.info(`Server started at http://${app.get('host')}:${app.get('port')}/api`);
+app.listen(APP_PORT, () => {
+  logger.info(`Server started at http://${app.get('host')}:${APP_PORT}/api`);
 });
 
 // Catch unhandled rejections
