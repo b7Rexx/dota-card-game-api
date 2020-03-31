@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import * as heroTypeController from '../controllers/herotypes';
+import * as heroTypeController from '../controllers/heroTypes';
 import { findHeroType, heroTypeValidator } from '../validators/heroTypeValidator';
 
 const router = Router();
