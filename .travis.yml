@@ -16,7 +16,7 @@ before_script:
   - npm install
   - cp .env.example .env
 script:
-  - npm run build:prod
+  - npm run build
 deploy:
   provider: pages
   skip_cleanup: true
