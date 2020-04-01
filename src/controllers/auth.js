@@ -15,7 +15,7 @@ export function login(req, res, next) {
   userRepository
     .where({ email: req.body.email })
     .then((data) => {
-      const user = JSON.parse(JSON.stringify(data));
+      const user = JSON.parse(JSON.stringify(data)).model;
 
       if (comparePass(req.body.password, user.password)) {
         return res.status(HttpStatus.ACCEPTED).json(userRepository.accessToken(user.id));
