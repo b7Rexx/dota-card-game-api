@@ -25,7 +25,7 @@ export default function adminAuthenticate(req, res, next) {
       userRepository
         .getById(decoded.id)
         .then((data) => {
-          const user = JSON.parse(JSON.stringify(data));
+          const user = JSON.parse(JSON.stringify(data)).model;
 
           if (user.isAdmin) next();
           else return next(Boom.unauthorized('Not Admin'));
