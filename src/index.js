@@ -13,7 +13,7 @@ import compression from 'compression';
 import * as Sentry from '@sentry/node';
 
 import routes from './routes';
-import json from './middlewares/json';
+// import json from './middlewares/json';
 import logger, { logStream } from './utils/logger';
 import * as errorHandler from './middlewares/errorHandler';
 
@@ -46,9 +46,9 @@ app.use(helmet());
 app.use(compression());
 app.use(morgan('tiny', { stream: logStream }));
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(errorHandler.bodyParser);
-app.use(json);
+// app.use(json);
 
 // API Routes
 app.use('/api', routes);
