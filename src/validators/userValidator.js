@@ -10,8 +10,13 @@ const schema = Joi.object({
   password: Joi.string().label('Password').min(6).max(255).required(),
 });
 
+const schemaEdit = Joi.object({
+  name: Joi.string().label('Name').max(255).required(),
+  email: Joi.string().label('Email').email().max(255).required(),
+});
+
 /**
- * Validate create/update user request.
+ * Validate create user request.
  *
  * @param   {Object}   req
  * @param   {Object}   res
@@ -20,6 +25,20 @@ const schema = Joi.object({
  */
 function userValidator(req, res, next) {
   return validate(req.body, schema)
+    .then(() => next())
+    .catch((err) => next(err));
+}
+
+/**
+ * Validate update user request.
+ *
+ * @param   {Object}   req
+ * @param   {Object}   res
+ * @param   {Function} next
+ * @returns {Promise}
+ */
+function userEditValidator(req, res, next) {
+  return validate(req.body, schemaEdit)
     .then(() => next())
     .catch((err) => next(err));
 }
@@ -39,4 +58,4 @@ function findUser(req, res, next) {
     .catch((err) => next(err));
 }
 
-export { findUser, userValidator };
+export { findUser, userValidator, userEditValidator };

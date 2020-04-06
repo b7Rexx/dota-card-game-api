@@ -54,7 +54,7 @@ export function create(req, res, next) {
  * @param {Function} next
  */
 export function update(req, res, next) {
-  req.body.password = hashPass(req.body.password);
+  // req.body.password = hashPass(req.body.password);
   userRepository
     .update(req.params.id, req.body)
     .then((data) => res.json({ data }))

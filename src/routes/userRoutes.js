@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import * as userController from '../controllers/users';
-import { findUser, userValidator } from '../validators/userValidator';
+import { findUser, userValidator, userEditValidator } from '../validators/userValidator';
 import authenticate from '../middlewares/authenticate';
 import adminAuthenticate from '../middlewares/adminAuthenticate';
 
@@ -32,7 +32,7 @@ router.post('/', userValidator, userController.create);
 /**
  * PUT /api/users/:id
  */
-router.put('/:id', authenticate, findUser, userValidator, userController.update);
+router.put('/:id', authenticate, findUser, userEditValidator, userController.update);
 
 /**
  * DELETE /api/users/:id

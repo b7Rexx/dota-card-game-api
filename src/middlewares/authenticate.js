@@ -19,7 +19,8 @@ export default function authenticate(req, res, next) {
 
   verifyJwtToken(token)
     .then((decoded) => {
-      req.body.user_id = decoded.id;
+      req.AuthID = decoded.id;
+      // req.body.user_id = decoded.id;
       next();
     })
     .catch((err) => {
