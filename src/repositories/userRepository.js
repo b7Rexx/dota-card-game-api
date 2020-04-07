@@ -17,18 +17,20 @@ class UserRepository extends baseRepository {
   /**
    * Returns access token with expire time.
    *
-   * @param {*} id
+   * @param {*} user
    * @returns {*}
    */
-  accessToken(id) {
+  accessToken(user) {
     const date = new Date();
 
     date.setDate(date.getDate() + 1);
 
     return {
       type: 'bearer',
-      token: getJwtToken(id),
+      token: getJwtToken(user.id),
       expire_at: date,
+      isAdmin: user.isAdmin || 0,
+      user: user,
     };
   }
 }

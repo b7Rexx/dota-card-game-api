@@ -18,7 +18,7 @@ export function login(req, res, next) {
       const user = JSON.parse(JSON.stringify(data)).model;
 
       if (comparePass(req.body.password, user.password)) {
-        return res.status(HttpStatus.ACCEPTED).json(userRepository.accessToken(user.id));
+        return res.status(HttpStatus.ACCEPTED).json(userRepository.accessToken(user));
       } else {
         throw Boom.unauthorized('invalid password');
       }
