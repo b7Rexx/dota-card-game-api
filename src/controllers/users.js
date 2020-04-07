@@ -1,6 +1,7 @@
 import HttpStatus from 'http-status-codes';
 
 import userRepository from '../repositories/userRepository';
+// import recordRepository from '../repositories/recordRepository';
 import { hashPass } from '../utils/bcrypt';
 
 /**
@@ -69,10 +70,18 @@ export function update(req, res, next) {
  * @param {Function} next
  */
 export function remove(req, res, next) {
+  // recordRepository.getByWhere({ user_id: req.params.id })
+  //   .then((result) => {
+  //     if (result.model.length > 0) {
+  //       //remove record by user id
+  //       result.model.models.forEach(item => { recordRepository.remove(item.id); })
+  //     }
   userRepository
     .remove(req.params.id)
     .then((data) => res.status(HttpStatus.NO_CONTENT).json({ data }))
     .catch((err) => next(err));
+  // })
+  // .catch((err) => next(err));
 }
 
 /**

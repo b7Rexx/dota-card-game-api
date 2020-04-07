@@ -1,5 +1,5 @@
 import bookshelf from '../db';
-import User from '../models/user';
+import User from './user';
 
 const TABLE_NAME = 'records';
 

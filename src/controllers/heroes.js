@@ -1,6 +1,7 @@
 import HttpStatus from 'http-status-codes';
 
 import heroRepository from '../repositories/heroRepository';
+import heroImageRepository from '../repositories/heroImageRepository';
 
 /**
  * Get all heros.
@@ -66,9 +67,22 @@ export function update(req, res, next) {
  * @param {Function} next
  */
 export function remove(req, res, next) {
-  heroRepository
-    .remove(req.params.id)
-    .then((data) => res.status(HttpStatus.NO_CONTENT).json({ data }))
+  heroImageRepository
+    .getByWhere({ hero_id: req.params.id })
+    .then((result) => {
+      if (result.model.length > 0) {
+        // remove hero images by user id
+        result.model.models.forEach((item) => {
+          heroImageRepository.remove(item.id);
+        });
+      }
+    })
+    .then(() => {
+      heroRepository
+        .remove(req.params.id)
+        .then((data) => res.status(HttpStatus.NO_CONTENT).json({ data }))
+        .catch((err) => next(err));
+    })
     .catch((err) => next(err));
 }
 

@@ -11,6 +11,7 @@ class UserRepository extends baseRepository {
    */
   constructor() {
     super(User);
+    this.withRelated = ['relateRecords'];
   }
 
   /**

@@ -1,6 +1,6 @@
 import bookshelf from '../db';
-import heroType from './hero_type';
-import heroImages from './hero_image';
+import HeroType from './hero_type';
+import HeroImage from './hero_image';
 
 const TABLE_NAME = 'heroes';
 
@@ -26,14 +26,14 @@ class Hero extends bookshelf.Model {
    * Get many to one relation hero type.
    */
   relateHeroType() {
-    return this.belongsTo(heroType);
+    return this.belongsTo(HeroType);
   }
 
   /**
    * Get one to many relation hero images.
    */
   relateHeroImages() {
-    return this.hasMany(heroImages);
+    return this.hasMany(HeroImage);
   }
 }
 

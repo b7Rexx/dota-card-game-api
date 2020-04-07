@@ -48,6 +48,26 @@ class baseRepository {
   }
 
   /**
+   * Fetch rows by where condition.
+   *
+   * @param {object} where
+   * @returns {Promise}
+   */
+  getByWhere(where) {
+    return new this.modal()
+      .where(where)
+      .fetchAll()
+      .then((data) => {
+        return {
+          model: data,
+        };
+      })
+      .catch(this.modal.NotFoundError, () => {
+        throw Boom.notFound('Not found');
+      });
+  }
+
+  /**
    * Create new row.
    *
    * @param   {Object}  row
@@ -75,7 +95,8 @@ class baseRepository {
    * @returns {Promise}
    */
   remove(id) {
-    return new this.modal({ id }).fetch().then((row) => row.destroy());
+    return new this.modal({ id }).destroy();
+    // return new this.modal({ id }).fetch().then((row) => row.destroy());
   }
 
   /**
