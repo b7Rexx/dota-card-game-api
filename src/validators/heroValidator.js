@@ -7,6 +7,7 @@ import heroRepository from '../repositories/heroRepository';
 const schema = Joi.object({
   name: Joi.string().label('Name').max(255).required(),
   hero_type_id: Joi.number().label('HeroTypeId').required(),
+  image: Joi.string().label('Image').allow(null).allow(''),
 });
 
 /**

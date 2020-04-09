@@ -1,6 +1,8 @@
 import { Router } from 'express';
 
 import * as heroController from '../controllers/heroes';
+import upload from '../middlewares/upload';
+import { imageMulterOptional } from '../middlewares/imageMulter';
 import { findHero, heroValidator } from '../validators/heroValidator';
 import adminAuthenticate from '../middlewares/adminAuthenticate';
 
@@ -26,12 +28,20 @@ router.get('/:id', adminAuthenticate, heroController.fetchById);
 /**
  * POST /api/heroes
  */
-router.post('/', adminAuthenticate, heroValidator, heroController.create);
+router.post('/', adminAuthenticate, heroValidator, upload.single('image'), imageMulterOptional, heroController.create);
 
 /**
  * PUT /api/heroes/:id
  */
-router.put('/:id', adminAuthenticate, findHero, heroValidator, heroController.update);
+router.put(
+  '/:id',
+  adminAuthenticate,
+  findHero,
+  heroValidator,
+  upload.single('image'),
+  imageMulterOptional,
+  heroController.update
+);
 
 /**
  * DELETE /api/heroes/:id

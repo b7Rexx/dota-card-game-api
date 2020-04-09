@@ -39,9 +39,29 @@ export function fetchById(req, res, next) {
  * @param {Function} next
  */
 export function create(req, res, next) {
+  const heroObj = {
+    name: req.body.name,
+    hero_type_id: req.body.hero_type_id,
+  };
+
   heroRepository
-    .create(req.body)
-    .then((data) => res.status(HttpStatus.CREATED).json({ data }))
+    .create(heroObj)
+    .then((data) => {
+      // req.body.option {boolean} from multer funtion
+      if (req.body.option) {
+        const imageObj = {
+          hero_id: data.id,
+          image: req.body.image,
+          thumbnail: req.body.thumbnail,
+          original: req.body.original,
+        };
+
+        heroImageRepository
+          .create(imageObj)
+          .then((imgData) => res.status(HttpStatus.CREATED).json({ hero: data, image: imgData }));
+        //   .catch((err) => next(err));
+      } else res.status(HttpStatus.CREATED).json({ hero: data });
+    })
     .catch((err) => next(err));
 }
 
