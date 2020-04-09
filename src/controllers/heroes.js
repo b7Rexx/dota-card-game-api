@@ -59,7 +59,6 @@ export function create(req, res, next) {
         heroImageRepository
           .create(imageObj)
           .then((imgData) => res.status(HttpStatus.CREATED).json({ hero: data, image: imgData }));
-        //   .catch((err) => next(err));
       } else res.status(HttpStatus.CREATED).json({ hero: data });
     })
     .catch((err) => next(err));
@@ -73,9 +72,52 @@ export function create(req, res, next) {
  * @param {Function} next
  */
 export function update(req, res, next) {
+  const heroObj = {
+    name: req.body.name,
+    hero_type_id: req.body.hero_type_id,
+  };
+
   heroRepository
-    .update(req.params.id, req.body)
-    .then((data) => res.json({ data }))
+    .update(req.params.id, heroObj)
+    .then((data) => {
+      if (req.body.option) {
+        heroImageRepository
+          .getByWhere({ hero_id: req.params.id })
+          .then((result) => {
+            if (result.model.length > 0) {
+              // remove hero images by user id
+              return new Promise((res) => {
+                result.model.models.forEach((item, index) => {
+                  heroImageRepository
+                    .removeImagebyId(item.id)
+                    .then(() => {
+                      if (index === result.model.length - 1) {
+                        res();
+                      }
+                    })
+                    .catch(() => {
+                      if (index === result.model.length - 1) {
+                        res();
+                      }
+                    });
+                });
+              });
+            }
+          })
+          .then(() => {
+            const imageObj = {
+              hero_id: data.id,
+              image: req.body.image,
+              thumbnail: req.body.thumbnail,
+              original: req.body.original,
+            };
+
+            heroImageRepository
+              .create(imageObj)
+              .then((imgData) => res.status(HttpStatus.CREATED).json({ hero: data, image: imgData }));
+          });
+      } else res.status(HttpStatus.CREATED).json({ hero: data });
+    })
     .catch((err) => next(err));
 }
 
@@ -92,8 +134,21 @@ export function remove(req, res, next) {
     .then((result) => {
       if (result.model.length > 0) {
         // remove hero images by user id
-        result.model.models.forEach((item) => {
-          heroImageRepository.remove(item.id);
+        return new Promise((res) => {
+          result.model.models.forEach((item, index) => {
+            heroImageRepository
+              .removeImagebyId(item.id)
+              .then(() => {
+                if (index === result.model.length - 1) {
+                  res();
+                }
+              })
+              .catch(() => {
+                if (index === result.model.length - 1) {
+                  res();
+                }
+              });
+          });
         });
       }
     })

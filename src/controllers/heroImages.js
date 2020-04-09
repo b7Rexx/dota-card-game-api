@@ -67,7 +67,9 @@ export function update(req, res, next) {
  */
 export function remove(req, res, next) {
   heroImageRepository
-    .remove(req.params.id)
-    .then((data) => res.status(HttpStatus.NO_CONTENT).json({ data }))
+    .removeImagebyId(req.params.id)
+    .then((data) => {
+      res.status(HttpStatus.NO_CONTENT).json({ data });
+    })
     .catch((err) => next(err));
 }
