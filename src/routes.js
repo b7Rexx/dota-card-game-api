@@ -33,11 +33,11 @@ router.get('/', (req, res) => {
 
 router.use('/auth', authRoutes);
 router.use('/heroes', heroRoutes);
+router.use('/herotypes', heroTypeRoutes);
 router.use('/records', recordRoutes);
 
 // only admin authorized routes
 router.use('/users', userRoutes);
 router.use('/heroimages', adminAuthenticate, heroImageRoutes);
-router.use('/herotypes', adminAuthenticate, heroTypeRoutes);
 
 export default router;
